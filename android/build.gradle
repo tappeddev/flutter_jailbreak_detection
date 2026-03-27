@@ -1,33 +1,18 @@
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
+}
+
 group 'appmire.be.flutterjailbreakdetection'
 version '1.0-SNAPSHOT'
 
-buildscript {
-    ext.kotlin_version = '2.0.0'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
-rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-
 android {
-    compileSdk 34
     namespace project.group
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 21
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -37,11 +22,15 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    defaultConfig {
-        minSdk 17
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 
 dependencies {
-    implementation 'com.github.scottyab:rootbeer:0.1.0'
+    implementation 'com.scottyab:rootbeer-lib:0.1.1'
 }
